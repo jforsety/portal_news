@@ -1,0 +1,28 @@
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+<!--  наследуемся от шаблона default.html, который мы создавали для flatpages -->
+{% extends 'flatpages/default.html' %}
+{% load censor %}
+<!-- Название у нас будет Product -->
+{% block title %}
+Newsid
+{% endblock title %}
+
+<!-- В контенте на странице мы выводим сам товар, идентификатор которого был передан в url -->
+{% block content %}
+<h1>{{ newsid }}</h1>
+        <table>
+           <tr>
+               <td><center>Заголовок:</center></td>
+               <td><center>Дата публикации:</center></td>
+               <td><center>Текст:</center></td>
+           </tr>
+
+           <tr>
+               <td><center>{{ newsid.title|censor }}</center></td>
+               <td><center>{{ newsid.created_date|date:'d M Y' }}</center></td>
+               <td><center>{{ newsid.text|censor }}</center></td>
+           </tr>
+
+       </table>
+
+{% endblock content %}
