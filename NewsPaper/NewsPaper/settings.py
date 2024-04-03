@@ -12,6 +12,9 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-vs0ail9t453b1g=6vbsfld&o($)9l2z3r#&9**kgkp*(%7hwco'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -158,14 +161,14 @@ ACCOUNT_FORMS = {"signup": "accounts.forms.CustomSignupForm"}
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.yandex.ru'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = "alexcist33@yandex.ru"
-EMAIL_HOST_PASSWORD = "orlxeqitdymnipfo"
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER_SMTP')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD_SMTP')
 EMAIL_USE_TLS = False
 EMAIL_USE_SSL = True
 
-DEFAULT_FROM_EMAIL = "alexcist33@yandex.ru"
+DEFAULT_FROM_EMAIL = os.getenv('DEFAULT_FROM_EMAIL_SMTP')
 
-SERVER_EMAIL = "alexcist33@yandex.ru"
+SERVER_EMAIL = os.getenv('SERVER_EMAIL_SMTP')
 MANAGERS = (
     ('Alex', 'foxlysky@gmail.com'),
 )

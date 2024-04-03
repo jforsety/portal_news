@@ -23,12 +23,8 @@ def my_job():
     today = datetime.datetime.today()
     last_week = today - datetime.timedelta(days=7)
     posts = Post.objects.filter(created_date__gte=last_week)
-    # categories = set(posts.values_list('categories__name', flat=True))
     categories = posts.values_list('categories', flat=True)
-    # subscribers = set(Category.objects.filter(name__in=categories).values_list('subscribers', flat=True))
-
     subscribers = User.objects.filter(subscriptions__category__in=categories).values_list('email', flat=True)
-
     subject = 'Сводка новостей за неделю'
     html = render_to_string(
         template_name='weekly_newsletter.html',
@@ -58,7 +54,7 @@ class Command(BaseCommand):
         scheduler.add_job(
             my_job,
             trigger=CronTrigger(minute='00', hour='18', day_of_week='FRI'),
-            # trigger=CronTrigger(minute='49',hour='22'),
+            # trigger=CronTrigger(minute='49',hour='19'),
             id='my_job',
             max_instances=1,
             replace_existing=True
