@@ -10,6 +10,7 @@ from django.db.models import Exists, OuterRef
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .models import Subscription, Category
+from .tasks import send_email_task, weekly_send_email_task
 
 
 class PostList(ListView):
@@ -132,6 +133,12 @@ class NewsCreate(CreateView, LoginRequiredMixin):
         news_type.type = 'news'
         news_rating = form.save(commit=False)
         news_rating.rating = 0
+        post = form.save(commit=False)
+        if self.request.path == '/news/create/':  # в модели Post categoryType по default = Article
+            post.categoryType = 'NW'  # если вызывается этот путь - сохраняется как NW
+        post.save()  # сохраняем форму( создали пост, кот присвоился id)
+        # вызываем таску (уведомление на email о появлении новой новости подписанной категории)
+        send_email_task.delay(post.pk)  # получаем pk созданного поста и передаем его в таску (тк это обяз-ый аргумент для таски)
         return super().form_valid(form)
 
 
