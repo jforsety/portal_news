@@ -23,6 +23,8 @@
                aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
        </button>
+       {% load cache %}
+       {% cache 100 div %}
        <div class="collapse navbar-collapse" id="navbarResponsive">
            <ul class="navbar-nav ml-auto">
                <li class="nav-item active">
@@ -45,6 +47,7 @@
                </li>
            </ul>
        </div>
+       {% endcache %}
    </div>
 </nav>
         <!-- Page content-->

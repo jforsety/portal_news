@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models import Sum
 from django.urls import reverse
+from django.core.cache import cache
 
 
 class Author(models.Model):  #Модель, содержащая объекты всех авторов.
@@ -62,11 +63,12 @@ class Post(models.Model):  #Модель постов. Эта модель до�
     def __str__(self):
         return self.title
 
-    # def get_absolute_url(self):
-    #     return reverse('post_detail', args=[str(self.id)])
-
     def get_absolute_url(self):
         return f'/news/{self.id}'
+
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)  # сначала вызываем метод родителя, чтобы объект сохранился
+        cache.delete(f'product-{self.pk}')  # затем удаляем его из кэша, чтобы сбросить его
 
 
 class PostCategory(models.Model):  #Модель категории постов. Промежуточная модель для связи «многие ко многим»:

@@ -11,6 +11,7 @@ from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect
 from .models import Subscription, Category
 from .tasks import send_email_task, weekly_send_email_task
+from django.core.cache import cache # импортируем наш кэш
 
 
 class PostList(ListView):
@@ -74,6 +75,16 @@ class PostDetail(DetailView):
         # чтобы на её примере рассмотреть работу ещё одного фильтра.
         context['next_sale'] = None
         return context
+
+    def get_object(self, *args, **kwargs):  # переопределяем метод получения объекта, как ни странно
+        obj = cache.get(f'post-{self.kwargs["pk"]}',
+                        None)  # кэш очень похож на словарь, и метод get действует так же. Он забирает значение по ключу, если его нет, то забирает None.
+
+        # если объекта нет в кэше, то получаем его и записываем в кэш
+        if not obj:
+            obj = super().get_object(queryset=self.queryset)
+            cache.set(f'post-{self.kwargs["pk"]}', obj)
+            return obj
 
 
 class Search(ListView):

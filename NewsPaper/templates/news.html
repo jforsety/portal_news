@@ -13,7 +13,7 @@ News
    <!-- Вот так выглядело использование переменной и фильтра -->
    <!-- <h3>{{ time_now|date:'M d Y' }}</h3> -->
    <!-- А вот так мы используем наш тег-->
-   <h3>{% current_time '%b %d %Y' %}</h3>
+   <!--h3>{% current_time '%b %d %Y' %}</h3-->
    <!--h3> {{ next_sale|default_if_none:"Чуть позже сообщим о распродаже!" }} </h3-->
     {# Добавляем форму, которая объединяет набор полей, которые будут отправляться в запросе #}
 <!--   <form action="" method="get">-->
@@ -30,18 +30,20 @@ News
     {% endif %}
 
     {% if news %}
+    {% load cache %}
+    {% cache 100 table %}
        <table>
            <tr>
-               <td><center>ID</center></td>
-               <td><center>Заголовок</center></td>
-               <td><center>Дата публикации</center></td>
-               <td><center>Текст</center></td>
+               <td><center><b>ID</b></center></td>
+               <td><center><b>Заголовок</b></center></td>
+               <td><center><b>Дата публикации</b></center></td>
+               <td><center><b>Текст</b></center></td>
                {# Условие получается составным. #}
                 {% if perms.news.change_post or perms.news.delete_post %}
-                <td>Действия</td>
+                <td><center><b>Действия</b></center></td>
                 {% endif %}
            </tr>
-
+    {% endcache %}
            {% for post in news %}
            <tr>
                <td><center>{{ post.id }}</center></td>
