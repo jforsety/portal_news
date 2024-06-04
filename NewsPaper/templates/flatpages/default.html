@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load i18n %}
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -16,38 +17,55 @@
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
    <div class="container">
-       <a class="navbar-brand" href="/news">Новостной портал</a>
+       <a class="navbar-brand" href="/news">{% translate "Новостной портал" %}</a>
        <button class="navbar-toggler" type="button" data-toggle="collapse"
                data-target="#navbarResponsive"
                aria-controls="navbarResponsive" aria-expanded="false"
                aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
        </button>
-       {% load cache %}
-       {% cache 100 div %}
+<!--       {% load cache %}-->
+<!--       {% cache 100 div %}-->
        <div class="collapse navbar-collapse" id="navbarResponsive">
            <ul class="navbar-nav ml-auto">
                <li class="nav-item active">
-                   <a class="nav-link" href="/news">Главная</a>
+                   <a class="nav-link" href="/news">{% translate "Главная" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/news/search/">Поиск</a>
+                   <a class="nav-link" href="/news/search/">{% translate "Поиск" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/news/create/">Создать новость</a>
+                   <a class="nav-link" href="/news/create/">{% translate "Создать новость" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/article/create/">Создать статью</a>
+                   <a class="nav-link" href="/article/create/">{% translate "Создать статью" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/accounts/login/">Войти</a>
+                   <a class="nav-link" href="/accounts/login/">{% translate "Войти" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/accounts/logout/">Выйти</a>
+                   <a class="nav-link" href="/accounts/logout/">{% translate "Выйти" %}</a>
+               </li>
+               <li class="nav-item">
+                   <form action="{% url 'set_language' %}" method="POST"> {% csrf_token %} <!-- Не забываем по csrf_token для POST запросов -->
+                    <input type="hidden" name="next" value="{{ redirect_to }}">
+                    {% get_current_language as LANGUAGE_CODE %}
+                    <select name="language" id="">
+                    {% get_available_languages as LANGUAGES %} <!-- получаем языки -->
+                    {% get_language_info_list for LANGUAGES as languages %} <!-- Помещаем их в список languages -->
+
+                    {% for language in languages %} <!-- Итерируясь по списку, выводим их название на языке пользователя и код -->
+                    <option value="{{ language.code }}" {% if language.code == LANGUAGE_CODE %} selected {% endif %}>
+                    {{ language.name_local }} - {{ language.code }}
+                    </option>
+                    {% endfor %}
+                </select>
+            <input type="submit" value="set">
+        </form>
                </li>
            </ul>
        </div>
-       {% endcache %}
+<!--       {% endcache %}--> #Пока отключил кеширование
    </div>
 </nav>
         <!-- Page content-->
