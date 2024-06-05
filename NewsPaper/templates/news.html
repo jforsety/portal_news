@@ -31,8 +31,8 @@ News
     {% endif %}
 
     {% if news %}
-    {% load cache %}
-    {% cache 100 table %}
+<!--    {% load cache %}-->
+<!--    {% cache 100 table %}-->
        <table>
            <tr>
                <td><center><b>ID</b></center></td>
@@ -44,7 +44,7 @@ News
                 <td><center><b>Действия</b></center></td>
                 {% endif %}
            </tr>
-    {% endcache %}
+<!--    {% endcache %}-->
            {% for post in news %}
            <tr>
                <td><center>{{ post.id }}</center></td>

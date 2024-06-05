@@ -28,7 +28,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 
 ALLOWED_HOSTS = []
 
-LOGIN_REDIRECT_URL = "/news"
+LOGIN_REDIRECT_URL = "/posts"
 
 # Application definition
 
@@ -127,7 +127,7 @@ LANGUAGE_CODE = 'ru'
 
 LANGUAGES = [
     ('en', 'English'),
-    ('ru', 'Русский')
+    ('ru', 'Русский'),
 ]
 
 TIME_ZONE = 'UTC'
