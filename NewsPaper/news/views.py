@@ -1,6 +1,8 @@
+import pytz
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.http import HttpResponse
 from django.urls import reverse_lazy
+from django.utils import timezone
 from django.views import View
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from .models import Post
@@ -9,7 +11,7 @@ from .filters import PostFilter
 from .forms import NewsForm, ArticleForm
 from django.contrib.auth.decorators import login_required
 from django.db.models import Exists, OuterRef
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_protect
 from .models import Subscription, Category
 from .tasks import send_email_task, weekly_send_email_task
@@ -54,7 +56,15 @@ class PostList(ListView):
         context['next_sale'] = None
         # Добавляем в контекст объект фильтрации.
         context['filterset'] = self.filterset
+        #часовые пояса
+        context['current_time'] = timezone.now()
+        context['timezones'] = pytz.common_timezones
         return context
+
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/posts/')
+
 
 
 class PostDetail(DetailView):
@@ -240,14 +250,21 @@ def subscriptions(request):
         {'categories': categories_with_subscriptions},
     )
 
-
-from django.utils.translation import gettext as _  # импортируем функцию для перевода
-
-
 # Create your views here.
-
 class Index(View):
     def get(self, request):
-        string = _('Hello world')
+        # .  Translators: This message appears on the home page only
+        models = Category.objects.all()
 
-        return HttpResponse(string)
+        context = {
+            'models': models,
+            'current_time': timezone.localtime(timezone.now()),
+            'timezones': pytz.common_timezones  # добавляем в контекст все доступные часовые пояса
+        }
+
+        return HttpResponse(render(request, 'index.html', context))
+
+    #  по пост-запросу будем добавлять в сессию часовой пояс, который и будет обрабатываться написанным нами ранее middleware
+    def post(self, request):
+        request.session['django_timezone'] = request.POST['timezone']
+        return redirect('/')
