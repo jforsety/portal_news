@@ -5,7 +5,7 @@ from django.views.decorators.cache import cache_page
 from .views import PostList, PostDetail, Search, NewsCreate, NewsEdit, NewsDelete, ArticleCreate, ArticleEdit, ArticleDelete, subscriptions
 
 urlpatterns = [
-   path('posts/', cache_page(60)(PostList.as_view()), name='post_list'),
+   path('posts/', (PostList.as_view()), name='post_list'),
    # pk — это первичный ключ товара, который будет выводиться у нас в шаблон
    # int — указывает на то, что принимаются только целочисленные значения
    path('posts/<int:pk>/', (PostDetail.as_view()), name='post_detail'), #убрал cache_page(60*5)

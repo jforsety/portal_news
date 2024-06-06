@@ -17,34 +17,32 @@
         <!-- Responsive navbar-->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark static-top">
    <div class="container">
-       <a class="navbar-brand" href="/posts">{% translate "Новостной портал" %}</a>
+       <a class="navbar-brand" href="/posts">{% trans "News Portal" %}</a>
        <button class="navbar-toggler" type="button" data-toggle="collapse"
                data-target="#navbarResponsive"
                aria-controls="navbarResponsive" aria-expanded="false"
                aria-label="Toggle navigation">
            <span class="navbar-toggler-icon"></span>
        </button>
-<!--       {% load cache %}-->
-<!--       {% cache 100 div %}-->
        <div class="collapse navbar-collapse" id="navbarResponsive">
            <ul class="navbar-nav ml-auto">
                <li class="nav-item active">
-                   <a class="nav-link" href="/posts">{% translate "Главная" %}</a>
+                   <a class="nav-link" href="/posts">{% trans "Main" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/posts/search/">{% translate "Поиск" %}</a>
+                   <a class="nav-link" href="/posts/search/">{% trans "Search" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/news/create/">{% translate "Создать новость" %}</a>
+                   <a class="nav-link" href="/news/create/">{% trans "Added news" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/article/create/">{% translate "Создать статью" %}</a>
+                   <a class="nav-link" href="/article/create/">{% trans "Added article" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/accounts/login/">{% translate "Войти" %}</a>
+                   <a class="nav-link" href="/accounts/login/">{% trans "Login" %}</a>
                </li>
                <li class="nav-item">
-                   <a class="nav-link" href="/accounts/logout/">{% translate "Выйти" %}</a>
+                   <a class="nav-link" href="/accounts/logout/">{% trans "Logout" %}</a>
                </li>
                <li class="nav-item">
                    <form action="{% url 'set_language' %}" method="POST"> {% csrf_token %} <!-- Не забываем по csrf_token для POST запросов -->
@@ -65,10 +63,8 @@
                </li>
            </ul>
        </div>
-<!--       {% endcache %}--> #Пока отключил кеширование
    </div>
 </nav>
-        <!-- Page content-->
  <center>
      {% block content %}
     {% endblock content %}

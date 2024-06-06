@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-06-05 23:19+0300\n"
+"POT-Creation-Date: 2024-06-06 23:06+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgstr ""
 "(n%100>=11 && n%100<=14)? 2 : 3);\n"
 #: .\news\views.py:251
 msgid "Hello world"
-msgstr ""
+msgstr "Привет мир"
 
 #: .\templates\account\email\email_confirmation_message.txt:5
 #, python-format
@@ -35,29 +35,29 @@ msgid ""
 msgstr ""
 
 #: .\templates\flatpages\default.html:20
-msgid "Новостной портал"
+msgid "News Portal"
 msgstr "Новостной портал"
 
 #: .\templates\flatpages\default.html:32
-msgid "Главная"
+msgid "Main"
 msgstr "Главная"
 
 #: .\templates\flatpages\default.html:35
-msgid "Поиск"
+msgid "Search"
 msgstr "Поиск"
 
 #: .\templates\flatpages\default.html:38
-msgid "Создать новость"
+msgid "Added news"
 msgstr "Создать новость"
 
 #: .\templates\flatpages\default.html:41
-msgid "Создать статью"
+msgid "Added article"
 msgstr "Создать статью"
 
 #: .\templates\flatpages\default.html:44
-msgid "Войти"
+msgid "Login"
 msgstr "Войти"
 
 #: .\templates\flatpages\default.html:47
-msgid "Выйти"
+msgid "Logout"
 msgstr "Выйти"
